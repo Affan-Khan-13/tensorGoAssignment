@@ -4,7 +4,7 @@ import Sidebar from './sidebar'
 const Layout = ({children}) => {
   return (
     <div className='flex min-h-[100vh] relative'>
-      <div className='sticky top-0 max-h-[100vh] w-2/12'>
+      <div className='sticky top-0 max-h-[100vh] min-w-2/12'>
         <Sidebar/>
       </div>
 
