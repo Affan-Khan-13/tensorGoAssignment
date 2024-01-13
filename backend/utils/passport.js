@@ -1,6 +1,8 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import UserModel from "../models/userModel.js";
+import CumulativeUsage from "../models/cummulativeUsageModel.js"
+import UsageDetails from "../models/usageDetailsModel.js"
 
 
 //google login and registration
@@ -15,8 +17,31 @@ try {
             async (accessToken, refreshToken, profile, cb) => {
                 try {
                     let user = await UserModel.findOne({ socialId: profile.id });
+                    if (user) {
+                        const id = user._id;
+                        const latestUsageDetails = await UsageDetails.findOne({ userId: id }).sort({ timestamp: -1 });
+                        latestUsageDetails.activeUsers = latestUsageDetails.activeUsers + 10;
+                        latestUsageDetails.storageUsage = latestUsageDetails.storageUsage + 3;
+                        await latestUsageDetails.save();
 
-                    if (!user) {
+                        const cummulativeUsage = await CumulativeUsage.findOne({ userId: user._id })
+                        if (cummulativeUsage) {
+                            cummulativeUsage.activeUsers = cummulativeUsage.activeUsers + 10;
+                            cummulativeUsage.storageUsage = cummulativeUsage.storageUsage + 3;
+
+                            await cummulativeUsage.save();
+                        }
+                        else {
+                            const newCummulativeUsage = new CumulativeUsage({
+                                userId: user._id,
+                                activeUsers: 3,
+                                storageUsage: 10
+                            })
+
+                            newCummulativeUsage.save();
+                        }
+                    }
+                    else {
                         user = new UserModel({
                             name: profile.displayName,
                             email: profile.emails[0].value,
@@ -24,6 +49,31 @@ try {
                         });
 
                         await user.save();
+
+                        const newUsageDetails = new UsageDetails({
+                            userId: user._id,
+                            storageUsage: 15,
+                            activeUsers: 30
+                        })
+
+                        await newUsageDetails.save();
+
+                        const cummulativeUsage = await CumulativeUsage.findOne({ userId: user._id })
+                        if (cummulativeUsage) {
+                            cummulativeUsage.activeUsers = cummulativeUsage.activeUsers + 30;
+                            cummulativeUsage.storageUsage = cummulativeUsage.storageUsage + 15;
+
+                            await cummulativeUsage.save();
+                        }
+                        else {
+                            const newCummulativeUsage = new CumulativeUsage({
+                                userId: user._id,
+                                activeUsers: 30,
+                                storageUsage: 15
+                            })
+
+                            newCummulativeUsage.save();
+                        }
                     }
 
                     // Call the callback function with a successful result
