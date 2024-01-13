@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import getUserById from '../utils/getUserById';
 import { useUser } from '../redux/userContext';
 
@@ -38,8 +38,11 @@ const Sidebar = () => {
           <div>{user?.email}</div>
         </div>
 
-        <div>
-          Tabs
+        <div className='flex flex-col gap-2'>
+          <Link to={'/'}><div>Home</div></Link>
+          <Link to={'/billing'}><div>Billing</div></Link>
+          <Link to={'/invoices'}><div>Invoices</div></Link>
+          <Link to={'/profile'}><div>Profile</div></Link>
         </div>
       </div>
 

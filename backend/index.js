@@ -5,7 +5,13 @@ import morgan from "morgan";
 import passport from "./utils/passport.js"
 import session from 'express-session'
 import dotenv from "dotenv";
+
+
 import userRoutes from "./routes/userRoute.js";
+import usageDetailsRoutes from "./routes/usageRoute.js";
+import cummulativeRoutes from "./routes/cummulativeRoute.js";
+import invoiceRoutes from "./routes/invoiceRoute.js"
+import { generateInvoices } from "./controllers/InvoiceController.js";
 
 dotenv.config();
 
@@ -25,11 +31,21 @@ mongoose.connect('mongodb://localhost:27017/tensorGo')
         process.exit(1);
     });
 
+
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/usage', usageDetailsRoutes);
+app.use('/api/v1/cummulative', cummulativeRoutes);
+app.use('/api/v1/invoice', invoiceRoutes);
+
 
 app.get('/', (req, res) => {
     res.send("Home Page");
 });
+
+app.get('/generate', async(req, res) =>{
+    await generateInvoices();
+    res.status(200).send("Invoice Generated");
+})
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
