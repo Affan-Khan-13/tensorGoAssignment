@@ -6,6 +6,7 @@ import Login from './components/login';
 import Profile from './components/profile';
 import Billing from './components/billing';
 import Invoices from './components/invoices';
+import InvoiceDetails from './components/invoiceDetails';
 
 function App() {
   return (
@@ -33,7 +34,12 @@ function App() {
             </Layout>
           } />
           <Route path="/login" element={
-              <Login/>
+            <Login />
+          } />
+          <Route path="/invoice/:invoiceId" element={
+            <Layout>
+              <InvoiceDetails />
+            </Layout>
           } />
         </Routes>
       </Router>

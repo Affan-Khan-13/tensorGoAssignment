@@ -12,7 +12,7 @@ const initialState = {
 const userReducer = (state, action) => {
     switch (action.type) {
         case 'SET_USER':
-            console.log('Setting user:', action.payload);
+            // console.log('Setting user:', action.payload);
             return { ...state, user: action.payload };
         default:
             return state;
@@ -28,7 +28,7 @@ export const UserProvider = ({ children }) => {
             if (storedUserData) {
                 try {
                     const { user } = await getUserById(storedUserData);
-                    console.log(user, "in context");
+                    // console.log(user, "in context");
                     dispatch({ type: 'SET_USER', payload: user });
                 } catch (error) {
                     console.error('Error fetching user data:', error);

@@ -27,7 +27,6 @@ const Sidebar = () => {
   }, [user])
 
   const location = useLocation();
-  console.log(location, "location")
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const id = params.get('id');
@@ -54,21 +53,21 @@ const Sidebar = () => {
   return (
     <div className='h-full w-full bg-[#ECEFF1] flex flex-col justify-between text-black py-4 px-2'>
       <div className='flex flex-col gap-8'>
-        <div className='flex gap-3 items-center'>
+        <div className='flex gap-3 items-center pt-2'>
           <div className='bg-black h-max w-max rounded-full px-3 py-2 text-white font-bold'>{intial}</div>
           <div className='text-[1rem] font-medium'>{shortname}</div>
         </div>
 
         <div className='flex flex-col gap-2'>
-          <Link to={'/'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg ${location.pathname === '/' ? 'bg-[#fff]' : ''}`}><Clipboardicon/> Home</div></Link>
-          <Link to={'/billing'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg ${location.pathname === '/billing' ? 'bg-[#fff]' : ''}`}><Statusicon/> Billing</div></Link>
-          <Link to={'/invoices'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg ${location.pathname === '/invoices' ? 'bg-[#fff]' : ''}`}><Dashboardicon/> Invoices</div></Link>
-          <Link to={'/profile'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg ${location.pathname === '/profile' ? 'bg-[#fff]' : ''}`}><Calendaricon/> Profile</div></Link>
+          <Link to={'/'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg select-none ${location.pathname === '/' ? 'bg-[#fff]' : ''}`}><Clipboardicon/> Home</div></Link>
+          <Link to={'/billing'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg select-none ${location.pathname === '/billing' ? 'bg-[#fff]' : ''}`}><Statusicon/> Billing</div></Link>
+          <Link to={'/invoices'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg select-none ${location.pathname.includes('/invoice') ? 'bg-[#fff]' : ''}`}><Dashboardicon/> Invoices</div></Link>
+          <Link to={'/profile'}><div className={`px-4 py-3 flex gap-4 items-center text-[1rem] font-medium  rounded-lg select-none ${location.pathname === '/profile' ? 'bg-[#fff]' : ''}`}><Calendaricon/> Profile</div></Link>
         </div>
       </div>
 
       <div>
-      <div className="px-4 text-[#FF2828] font-sans flex gap-2 items-center font-medium cursor-pointer" onClick={() => Logout()}>
+      <div className="px-4 py-4 text-[#FF2828] font-sans flex gap-2 items-center font-medium cursor-pointer select-none" onClick={() => Logout()}>
           <Door /> Sign Out
         </div>
       </div>
