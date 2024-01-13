@@ -75,7 +75,7 @@ const Billing = () => {
           <div className='mt-6'>
             <div className='grid grid-cols-5 text-[#B3B3B3] font-medium mb-5'>
               <div className=' place-self-start font-bold'>Usage Cost:</div>
-              <div className=' place-self-start'> Active</div>
+              <div className=' place-self-start'> Parameters</div>
               <div className=' place-self-start'> Quantity</div>
               <div className=' place-self-start'> Unit Cost</div>
               <div className=' place-self-start'> Total Cost</div>
