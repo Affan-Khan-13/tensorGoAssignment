@@ -1,6 +1,7 @@
 import CumulativeUsage from "../models/cummulativeUsageModel.js";
 import Invoice from "../models/invoiceModel.js";
 import UsageDetails from "../models/usageDetailsModel.js";
+import generateInvoiceId from "../utils/genetateInvoiceId.js";
 
 const calculateTotalAmount = (usageDetails) => {
     const userAmount = 30 * usageDetails.activeUsers;
@@ -9,7 +10,8 @@ const calculateTotalAmount = (usageDetails) => {
     return totalAmount;
 }
 
-const oneMonthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+// const oneMonthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+const oneMonthAgo = new Date(Date.now() - 5 * 60 * 1000);
 
 
 const generateInvoices = async () => {
@@ -24,7 +26,7 @@ const generateInvoices = async () => {
             const totalAmount = calculateTotalAmount(userDetail);
 
             const invoice = new Invoice({
-                invoiceId: 435331,
+                invoiceId: generateInvoiceId(),
                 userId: userDetail.userId._id,
                 billingCycleStart: userDetail.timestamp,
                 billingCycleEnd: oneMonthAgo,
