@@ -14,47 +14,89 @@ const calculateTotalAmount = (usageDetails) => {
 const oneMonthAgo = new Date(Date.now() - 5 * 60 * 1000);
 
 
-const generateInvoices = async () => {
+const generateInvoices = async (userId) => {
     try {
-        console.log('Generating');
-        const usersToInvoice = await UsageDetails.find({
-            timestamp: { $lt: oneMonthAgo },
-            invoiceGenerated: false,
-        }).populate('userId');
+        if (userId) {
+            const usersToInvoice = await UsageDetails.find({
+                userId: userId,
+                invoiceGenerated: false,
+            }).populate('userId');
 
-        for (const userDetail of usersToInvoice) {
-            const totalAmount = calculateTotalAmount(userDetail);
+            for (const userDetail of usersToInvoice) {
+                const totalAmount = calculateTotalAmount(userDetail);
 
-            const invoice = new Invoice({
-                invoiceId: generateInvoiceId(),
-                userId: userDetail.userId._id,
-                billingCycleStart: userDetail.timestamp,
-                billingCycleEnd: oneMonthAgo,
-                items: [
-                    { description: 'Active Users', quantity: userDetail.activeUsers, unitPrice: 30 },
-                    { description: 'Storage Usage', quantity: userDetail.storageUsage, unitPrice: 70 },
-                    // Add other relevant items
-                ],
-                totalAmount,
-            });
+                const invoice = new Invoice({
+                    invoiceId: generateInvoiceId(),
+                    userId: userDetail.userId._id,
+                    billingCycleStart: userDetail.timestamp,
+                    billingCycleEnd: oneMonthAgo,
+                    items: [
+                        { description: 'Active Users', quantity: userDetail.activeUsers, unitPrice: 30 },
+                        { description: 'Storage Usage', quantity: userDetail.storageUsage, unitPrice: 70 },
+                        // Add other relevant items
+                    ],
+                    totalAmount,
+                });
 
-            await invoice.save();
+                await invoice.save();
 
-            //Adding to Cummulative Usage
-            // const cumulativeUsage = await CumulativeUsage.findOne({ userId: userDetail.userId._id });
-            // cumulativeUsage.activeUsers += userDetail.activeUsers;
-            // cumulativeUsage.storageUsage += userDetail.storageUsage;
-            // await cumulativeUsage.save();
+                //Adding to Cummulative Usage
+                // const cumulativeUsage = await CumulativeUsage.findOne({ userId: userDetail.userId._id });
+                // cumulativeUsage.activeUsers += userDetail.activeUsers;
+                // cumulativeUsage.storageUsage += userDetail.storageUsage;
+                // await cumulativeUsage.save();
 
-            userDetail.invoiceGenerated = true;
-            await userDetail.save();
+                userDetail.invoiceGenerated = true;
+                await userDetail.save();
 
-            const newUsageDetails = new UsageDetails({
-                userId: userDetail.userId._id,
-                // Initialize with default or initial values
-            });
+                const newUsageDetails = new UsageDetails({
+                    userId: userDetail.userId._id,
+                    // Initialize with default or initial values
+                });
 
-            await newUsageDetails.save();
+                await newUsageDetails.save();
+            }
+        }
+        else {
+            const usersToInvoice = await UsageDetails.find({
+                timestamp: { $lt: oneMonthAgo },
+                invoiceGenerated: false,
+            }).populate('userId');
+
+            for (const userDetail of usersToInvoice) {
+                const totalAmount = calculateTotalAmount(userDetail);
+
+                const invoice = new Invoice({
+                    invoiceId: generateInvoiceId(),
+                    userId: userDetail.userId._id,
+                    billingCycleStart: userDetail.timestamp,
+                    billingCycleEnd: oneMonthAgo,
+                    items: [
+                        { description: 'Active Users', quantity: userDetail.activeUsers, unitPrice: 30 },
+                        { description: 'Storage Usage', quantity: userDetail.storageUsage, unitPrice: 70 },
+                        // Add other relevant items
+                    ],
+                    totalAmount,
+                });
+
+                await invoice.save();
+
+                //Adding to Cummulative Usage
+                // const cumulativeUsage = await CumulativeUsage.findOne({ userId: userDetail.userId._id });
+                // cumulativeUsage.activeUsers += userDetail.activeUsers;
+                // cumulativeUsage.storageUsage += userDetail.storageUsage;
+                // await cumulativeUsage.save();
+
+                userDetail.invoiceGenerated = true;
+                await userDetail.save();
+
+                const newUsageDetails = new UsageDetails({
+                    userId: userDetail.userId._id,
+                    // Initialize with default or initial values
+                });
+
+                await newUsageDetails.save();
+            }
         }
     }
     catch (err) {
@@ -65,9 +107,9 @@ const generateInvoices = async () => {
 const getAllInvoices = async (req, res) => {
     try {
         const { userId } = req.params;
-        const allInvoices = await Invoice.find({ userId: userId});
-        if(!allInvoices){
-            res.status(400).json({ error: "Invoice not found"})
+        const allInvoices = await Invoice.find({ userId: userId });
+        if (!allInvoices) {
+            res.status(400).json({ error: "Invoice not found" })
         }
 
         res.status(200).json({ allInvoices })

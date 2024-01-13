@@ -42,8 +42,9 @@ app.get('/', (req, res) => {
     res.send("Home Page");
 });
 
-app.get('/generate', async(req, res) =>{
-    await generateInvoices();
+app.post('/generate', async(req, res) =>{
+    const {userId} = req.body;
+    await generateInvoices(userId);
     res.status(200).send("Invoice Generated");
 })
 
