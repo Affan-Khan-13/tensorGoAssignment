@@ -5,6 +5,7 @@ import './App.css';
 import Login from './components/login';
 import Profile from './components/profile';
 import Billing from './components/billing';
+import Invoices from './components/invoices';
 
 function App() {
   return (
@@ -19,6 +20,11 @@ function App() {
           <Route path="/billing" element={
             <Layout>
               <Billing />
+            </Layout>
+          } />
+          <Route path="/invoices" element={
+            <Layout>
+              <Invoices />
             </Layout>
           } />
           <Route path="/profile" element={
