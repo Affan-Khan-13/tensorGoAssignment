@@ -12,7 +12,7 @@ const Billing = () => {
     if (user) {
       const UsageDetails = async () => {
         const data = await getLatestUsageDetails(user._id);
-        console.log(data, "invoce");
+        // console.log(data, "invoce");
         setInvoiceDetails(data);
       }
       UsageDetails();

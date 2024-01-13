@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { useUser } from '../redux/userContext'
 import getLatestUsageDetails from '../utils/getLatestUsage';
 import getCummulativeDetails from '../utils/getCummulativeUsage';
+import generateInvoice from '../utils/generateInvoice';
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
   const { state } = useUser();
   const user = state.user;
+  const navigate = useNavigate();
 
   const [invoiceDetails, setInvoiceDetails] = useState();
   const [cummulativeDetails, setCummulativeDetails] = useState();
@@ -65,6 +68,11 @@ const Main = () => {
     }
   }, [cummulativeDetails]);
 
+  const generateInv = async() =>{
+    const data = await generateInvoice(user._id);
+    navigate('/invoices')
+  }
+
 
   return (
     <div className='w-full min-h-full px-3'>
@@ -103,6 +111,10 @@ const Main = () => {
                   <div className=' place-self-start'>{invoiceDetails?.storageUsage}GB</div>
                 </div>
               </div>
+            </div>
+
+            <div className='mt-6 rounded-2xl h-max w-max py-3 px-5 bg-black hover:bg-white text-white hover:text-black border-[2px] border-black cursor-pointer' onClick={()=>generateInv()}>
+              Gentrate Invoice
             </div>
           </div>
         </div>
