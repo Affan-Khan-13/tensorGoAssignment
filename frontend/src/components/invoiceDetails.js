@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import getInvoiceDetails from '../utils/getInvoiceDetails';
 
+
 const InvoiceDetails = () => {
+    const navigate = useNavigate();
     const { invoiceId } = useParams();
 
     const [invoiceDetails, setInvoiceDetails] = useState();
@@ -39,10 +41,14 @@ const InvoiceDetails = () => {
         return total;
     }
 
+    const GoBack = () =>{
+        navigate(-1);
+    }
+
     return (
         <div className='w-full min-h-full px-3'>
             <div className='font-semibold text-[2rem] flex gap-2 items-center mb-10'>
-                Invoice Id:<div className='font-semibold text-[#414141]'>{invoiceDetails?.invoiceId}</div>
+                <img src='/images/arrowLeft.png' className='w-8 h-8 pt-2 pr-1 cursor-pointer' onClick={()=>GoBack()}/> Invoice Id:<div className='font-semibold text-[#414141]'>{invoiceDetails?.invoiceId}</div>
             </div>
 
             <div className='rounded-lg border-[1px] border-black p-2'>
