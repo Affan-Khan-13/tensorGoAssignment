@@ -11,7 +11,7 @@ const InvoiceDetails = () => {
             if (invoiceId) {
                 const data = await getInvoiceDetails(invoiceId);
                 setInvoiceDetails(data);
-                console.log(data);
+                // console.log(data);
             }
         }
         getDetails();

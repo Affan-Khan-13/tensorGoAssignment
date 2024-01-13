@@ -28,10 +28,8 @@ const Invoices = () => {
 
   return (
     <div className='w-full min-h-full px-4'>
-      <div className=' flex justify-center'>
-        <div className='text-[2rem] font-medium'>
-          Invoices
-        </div>
+      <div className='text-[2rem] font-medium'>
+        Invoices
       </div>
 
       <div className='grid grid-cols-4 my-8 text-[1rem] font-medium text-[#B3B3B3]'>

@@ -39,7 +39,7 @@ const Sidebar = () => {
       const idCheck = localStorage.getItem('userId')
       if (!idCheck) {
         navigate('/login');
-        console.log("outsid")
+        // console.log("outsid")
       }
     }
   }, [id])
