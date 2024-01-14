@@ -48,7 +48,7 @@ const InvoiceDetails = () => {
     return (
         <div className='w-full min-h-full px-3'>
             <div className='font-semibold text-[2rem] flex gap-2 items-center mb-10'>
-                <img src='/images/arrowLeft.png' className='w-8 h-8 pt-2 pr-1 cursor-pointer' onClick={()=>GoBack()}/> Invoice Id:<div className='font-semibold text-[#414141]'>{invoiceDetails?.invoiceId}</div>
+                <img src='/images/arrowLeft.png' className='w-8 h-8 pt-2 pr-1 cursor-pointer' onClick={()=>GoBack()}/> Invoice Id:<div className='font-semibold text-[#414141]'>{invoiceDetails?.invoiceId || "0"}</div>
             </div>
 
             <div className='rounded-lg border-[1px] border-black p-2'>
@@ -69,8 +69,8 @@ const InvoiceDetails = () => {
                             {invoiceDetails?.items?.map((item) => (
                                 <div className='grid grid-cols-5 text-[#414141] font-medium mb-2'>
                                     <div className=' place-self-start'></div>
-                                    <div className=' place-self-start'>{item.description}</div>
-                                    <div className=' place-self-start'>{item.quantity}</div>
+                                    <div className=' place-self-start'>{item.description || "0"}</div>
+                                    <div className=' place-self-start'>{item.quantity || "0"}</div>
                                     <div className=' place-self-start'>{item.description === 'Active Users' ? '30' : '70'}</div>
                                     <div className=' place-self-start'>{calculatePrice(item.quantity, item.description === 'Active Users' ? 30 : 70)}</div>
                                 </div>
@@ -79,7 +79,7 @@ const InvoiceDetails = () => {
                     </div>
 
                     <div className='flex items-center gap-5'>
-                        <div className='font-bold text-[#B3B3B3]'>Total Amount:</div><div className='text-[#414141]'>{invoiceDetails?.totalAmount}</div>
+                        <div className='font-bold text-[#B3B3B3]'>Total Amount:</div><div className='text-[#414141]'>{invoiceDetails?.totalAmount || "0"}</div>
                     </div>
                 </div>
             </div>

@@ -23,7 +23,7 @@ const Profile = () => {
   }
   return (
     <div className='max-w-full h-full py-12 flex flex-col items-center gap-6'>
-      <div className='h-max w-max text-[10rem] font-medium bg-black rounded-full py-4 px-16 flex items-center justify-center text-white'>
+      <div className='h-max text-[10rem] min-w-[17rem] font-medium bg-black rounded-full py-4 px-16 flex items-center justify-center text-white'>
         {intial}
       </div>
 

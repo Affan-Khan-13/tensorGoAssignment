@@ -85,7 +85,7 @@ const Billing = () => {
               <div className='grid grid-cols-5 text-[#414141] font-medium mb-2'>
                 <div className=' place-self-start'></div>
                 <div className=' place-self-start'>Active Users</div>
-                <div className=' place-self-start'>{invoiceDetails?.activeUsers}</div>
+                <div className=' place-self-start'>{invoiceDetails?.activeUsers || "0"}</div>
                 <div className=' place-self-start'>30</div>
                 <div className=' place-self-start'>{calculatePrice(invoiceDetails?.activeUsers, 30)}</div>
               </div>
@@ -93,7 +93,7 @@ const Billing = () => {
               <div className='grid grid-cols-5 text-[#414141] font-medium mb-2'>
                 <div className=' place-self-start'></div>
                 <div className=' place-self-start'>Storage Usage</div>
-                <div className=' place-self-start'>{invoiceDetails?.storageUsage}GB</div>
+                <div className=' place-self-start'>{invoiceDetails?.storageUsage || "0"}GB</div>
                 <div className=' place-self-start'>70</div>
                 <div className=' place-self-start'>{calculatePrice(invoiceDetails?.storageUsage, 70)}</div>
               </div>
@@ -101,7 +101,7 @@ const Billing = () => {
           </div>
 
           <div className='flex items-center gap-5'>
-            <div className='font-bold text-[#B3B3B3]'>Total Amount:</div><div className='text-[#414141]'>{totalAmount}</div>
+            <div className='font-bold text-[#B3B3B3]'>Total Amount:</div><div className='text-[#414141]'>{totalAmount || "0"}</div>
           </div>
         </div>
       </div>
