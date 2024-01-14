@@ -9,11 +9,14 @@ const Invoices = () => {
   const user = state.user;
   const navigate = useNavigate();
   const [invoices, setInvoices] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (user) {
       const Allinvoices = async () => {
+        setLoading(true);
         const data = await getAllInvoices(user._id);
         setInvoices(data);
+        setLoading(false);
       }
       Allinvoices();
     }
@@ -27,8 +30,18 @@ const Invoices = () => {
     return `${startDate} - ${endDate}`;
   }
 
-  const Clicked = () =>{
+  const Clicked = () => {
     navigate('/');
+  }
+
+  if (loading) {
+    return (
+      <div className='w-full min-h-full px-4'>
+        <div className='text-[2rem] font-medium'>
+          Loading....
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -51,7 +64,7 @@ const Invoices = () => {
             </div>
           </div>
           <div className='flex justify-center'>
-            <div className='mt-6 rounded-2xl h-max w-max py-3 px-5 bg-black hover:bg-white text-white hover:text-black font-medium border-[2px] border-black cursor-pointer' onClick={()=>Clicked()}>
+            <div className='mt-6 rounded-2xl h-max w-max py-3 px-5 bg-black hover:bg-white text-white hover:text-black font-medium border-[2px] border-black cursor-pointer' onClick={() => Clicked()}>
               Home Page
             </div>
           </div>

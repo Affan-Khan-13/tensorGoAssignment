@@ -8,27 +8,30 @@ const Billing = () => {
 
   const [invoiceDetails, setInvoiceDetails] = useState();
   const [endDate, setEndDate] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (user) {
       const UsageDetails = async () => {
+        setLoading(true);
         const data = await getLatestUsageDetails(user._id);
         // console.log(data, "invoce");
         setInvoiceDetails(data);
+        setLoading(false);
       }
       UsageDetails();
     }
   }, [user])
 
-  useEffect(()=>{
+  useEffect(() => {
     const expectedEndDate = new Date(new Date(invoiceDetails?.timestamp).getTime() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString(undefined, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     });
     setEndDate(expectedEndDate);
-  },[invoiceDetails])
+  }, [invoiceDetails])
 
-  
+
 
   const datewithname = (date) => {
     const DateComin = new Date(date).toLocaleDateString(undefined, {
@@ -56,6 +59,16 @@ const Billing = () => {
     }
   }, [invoiceDetails]);
 
+
+  if (loading) {
+    return (
+      <div className='w-full min-h-full px-4'>
+        <div className='text-[2rem] font-medium'>
+          Loading....
+        </div>
+      </div>
+    )
+  }
   return (
     <div className='w-full min-h-full px-3'>
       <div className='font-semibold text-[2rem] flex gap-2 items-center mb-10'>

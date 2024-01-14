@@ -13,12 +13,15 @@ const Main = () => {
   const [invoiceDetails, setInvoiceDetails] = useState();
   const [cummulativeDetails, setCummulativeDetails] = useState();
   const [endDate, setEndDate] = useState();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     if (user) {
       const UsageDetails = async () => {
+        setLoading(true);
         const data = await getLatestUsageDetails(user._id);
         // console.log(data, "invoce");
         setInvoiceDetails(data);
+        setLoading(false);
       }
       UsageDetails();
 
@@ -73,7 +76,15 @@ const Main = () => {
     navigate('/invoices')
   }
 
-
+  if (loading) {
+    return (
+      <div className='w-full min-h-full px-4'>
+        <div className='text-[2rem] font-medium'>
+          Loading....
+        </div>
+      </div>
+    )
+  }
   return (
     <div className='w-full min-h-full px-3'>
       <div className='mb-10'>
