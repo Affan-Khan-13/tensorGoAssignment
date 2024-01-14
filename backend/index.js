@@ -24,7 +24,7 @@ app.use(session({ secret: process.env.SESSION_SECRET || 'your-random-secret', re
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect('mongodb://localhost:27017/tensorGo')
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to database Successfully !!!"))
     .catch((err) => {
         console.error("Error connecting to the database:", err);
