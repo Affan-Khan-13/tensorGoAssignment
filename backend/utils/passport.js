@@ -12,7 +12,7 @@ try {
             {
                 clientID: "440909725992-mj0e0r3dfgns47tt7qp6n7i6dieqomjo.apps.googleusercontent.com",
                 clientSecret: "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",
-                callbackURL: "http://localhost:3001/api/v1/users/auth/google/callback",
+                callbackURL: "https://tensorgoassignment.onrender.com/api/v1/users/auth/google/callback",
             },
             async (accessToken, refreshToken, profile, cb) => {
                 try {
