@@ -27,7 +27,7 @@ const Invoices = () => {
     const startDate = new Date(start).toLocaleDateString();
     const endDate = new Date(end).toLocaleDateString();
 
-    return `${startDate} - ${endDate}`;
+    return `${endDate} - ${startDate}`;
   }
 
   const Clicked = () => {
