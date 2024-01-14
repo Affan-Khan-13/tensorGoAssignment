@@ -10,8 +10,8 @@ const calculateTotalAmount = (usageDetails) => {
     return totalAmount;
 }
 
-const oneMonthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-// const oneMonthAgo = new Date(Date.now() - 5 * 60 * 1000);
+// const oneMonthAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+const oneMonthAgo = new Date(Date.now() - 5 * 60 * 1000);
 
 
 const generateInvoices = async (userId) => {
